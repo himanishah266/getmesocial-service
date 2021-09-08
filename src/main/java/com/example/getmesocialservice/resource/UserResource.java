@@ -4,9 +4,9 @@ package com.example.getmesocialservice.resource;
 import com.example.getmesocialservice.model.User;
 import com.example.getmesocialservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController             //rest endpoint
 @RequestMapping("/api")     //rest endpoint path starts with
@@ -18,9 +18,42 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user")     //return the values in json format
+    //getting data in json format
+    @GetMapping("/user")     //return the values in json format, getting data
     public User getUser(){
         return userService.getUser();
+    }
+
+    //send request body to save the data in json format., sending data
+    @PostMapping("/user")
+    public User saveUser(@RequestBody User user){
+        return userService.saveUser(user);
+    }
+
+    @GetMapping("/allUsers")    //getting all the data in the list
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    //getting data based on userId
+    //whatever comes here in Json format based on parameter variable(field) userId.
+    //taking the path endpoint-userId, that value comes here in parameter would be converted into userID
+    @GetMapping("/user/{userId}")
+    public User getUserById(@PathVariable("userId") int userId){
+        return userService.getUserById(userId);
+
+    }
+
+
+    @PutMapping("/user/{userId}")
+    public User updateUser(@PathVariable("userId") int userId, @RequestBody User user){
+        return userService.updateUser(userId, user);
+    }
+
+    @DeleteMapping("/user")
+    public User deleteUser(@RequestParam(name = "userId") int userId){
+        return userService.deleteUser(userId);
+
     }
 
 
