@@ -41,7 +41,6 @@ public class UserResource {
     @GetMapping("/user/{userId}")
     public User getUserById(@PathVariable("userId") int userId){
         return userService.getUserById(userId);
-
     }
 
 
