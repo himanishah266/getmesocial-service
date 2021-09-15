@@ -1,7 +1,10 @@
 package com.example.getmesocialservice.model;
 
+import com.example.getmesocialservice.Validation.ValidNameComment;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class Comment {
@@ -9,8 +12,13 @@ public class Comment {
     @Id
     private String id;
     private String photoId;
+
+    @Length(min = 5)
     private String message;
+
+    @ValidNameComment @NotEmpty
     private String createdBy;
+
     private Date dateCreated;
 
 

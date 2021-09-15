@@ -6,6 +6,7 @@ import com.example.getmesocialservice.service.AlbumDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 //this annotation applied to a class as request handler, it's used to create Restful web services using spring MVC.
@@ -17,7 +18,7 @@ public class AlbumDbResource {
     private AlbumDbService albumService;
 
     @PostMapping
-    public AlbumDb saveAlbums(@RequestBody AlbumDb album){
+    public AlbumDb saveAlbums(@RequestBody @Valid AlbumDb album){
         return albumService.saveAlbum(album);
     }
 

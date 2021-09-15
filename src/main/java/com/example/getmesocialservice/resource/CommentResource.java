@@ -5,6 +5,7 @@ import com.example.getmesocialservice.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public class CommentResource {
     private CommentService commentService;
 
     @PostMapping
-    public Comment saveComment(@RequestBody Comment comment){
+    public Comment saveComment(@RequestBody @Valid Comment comment){
         return commentService.saveComment(comment);
     }
 

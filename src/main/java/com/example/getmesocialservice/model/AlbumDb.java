@@ -1,11 +1,21 @@
 package com.example.getmesocialservice.model;
 
+import com.example.getmesocialservice.Validation.ValidCreatedBy;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Id;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class AlbumDb {
+
+    @Id
     private String id;
+    @Length(max = 10)
     private String name;
     private String coverPhotoUrl;
+
+    @NotEmpty @ValidCreatedBy
     private String createdBy;
     private Date dateCreated;
 
