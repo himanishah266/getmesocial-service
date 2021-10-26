@@ -1,6 +1,5 @@
 package com.example.getmesocialservice.resource;
 
-
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.S3Object;
 import com.example.getmesocialservice.service.FileService;
@@ -43,8 +42,6 @@ public class FileResource {
                 .contentType(MediaType.parseMediaType(object.getObjectMetadata().getContentType()))
                         .header(Headers.CONTENT_DISPOSITION, "attachment; filename = \""+key+ "\"")
                 .body(new ByteArrayResource(object.getObjectContent().readAllBytes())) ;
-
-
     }
 
     @DeleteMapping

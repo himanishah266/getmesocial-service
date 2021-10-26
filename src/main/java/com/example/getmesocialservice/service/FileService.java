@@ -20,13 +20,12 @@ public class FileService {
     public boolean upload(MultipartFile file) {
 
         BasicAWSCredentials credentials = new BasicAWSCredentials("AKIA55G3R4ZU356B2QXW", "olvqMcuerfqzC3Qvl3V8HwErxYwAddxbYKwspCd/");
-
-
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.CA_CENTRAL_1).build();
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
+            //BucketName: which is created using S3 services: backend-spring22, in that bucket you are going to store file....
             s3.putObject("backend-spring22", file.getOriginalFilename(), file.getInputStream(), metadata);
             return true;
         } catch (AmazonServiceException | IOException e) {
