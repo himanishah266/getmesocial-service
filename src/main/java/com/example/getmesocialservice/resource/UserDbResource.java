@@ -1,12 +1,16 @@
 package com.example.getmesocialservice.resource;
 
 import com.example.getmesocialservice.exception.RestrictedInfoException;
+import com.example.getmesocialservice.model.FirebaseUser;
 import com.example.getmesocialservice.model.UserDb;
+import com.example.getmesocialservice.service.FirebaseService;
 import com.example.getmesocialservice.service.UserDbService;
+import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController   //this annotation applied to a class as request handler, it's used to create Restful web services using spring MVC.
@@ -19,11 +23,19 @@ public class UserDbResource {
     @Autowired
     private UserDbService userService;
 
+    @Autowired
+    private FirebaseService firebaseService;
+
     //send request body to save the data in json format., sending data
     //@valid: it would try to validate all field of post depends on annotation of model classes
     @PostMapping
-    public UserDb saveUser(@RequestBody @Valid UserDb user){
-        return userService.saveUser(user);
+    public UserDb saveUser(@RequestBody @Valid UserDb user, @RequestHeader(name="idToken") String idToken) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+        //if id token is valid then you can save the user info.
+        if(firebaseUser!= null){
+            return userService.saveUser(user);
+        }
+        return  null;
     }
 
     @GetMapping    //getting all the data in the list

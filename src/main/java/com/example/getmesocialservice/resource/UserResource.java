@@ -6,6 +6,8 @@ import com.example.getmesocialservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController             //rest endpoint
@@ -18,6 +20,8 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+
+
     //getting data in json format
     @GetMapping("/user")     //return the values in json format, getting data
     public User getUser(){
@@ -25,9 +29,9 @@ public class UserResource {
     }
 
     //send request body to save the data in json format., sending data
-    @PostMapping("/user")
-    public User saveUser(@RequestBody User user){
-        return userService.saveUser(user);
+    @PostMapping
+    public User saveUser(@RequestBody @Valid User user) throws IOException {
+            return userService.saveUser(user);
     }
 
     @GetMapping("/allUsers")    //getting all the data in the list

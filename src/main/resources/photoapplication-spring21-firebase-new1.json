@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "photoapplication-spring21",
+  "private_key_id": "51d76e935898e6880375940709c5e181957d50ba",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDJVZzxNl4C849r\nUcdPWMMUfplw0azdFul+2XKTV8ctPTSBm4V0NLaTepH0mvQQOBDW1bzVSI1hJf+N\nuvBLFvKjoV6BTrwJhJiFwNQqL97E8BYWP5T8XI0h5z7Vm6nyq+8SpP0jxwZqusHl\nbKGpg+hhM0VZHUPi2UA9coxWHj7Ml1B0vNdEgffVFJC0ADso+763cUDmtA4T8JjS\ngYGD3/yXSbs4FiyShrcc8GeqG3n6V0s7rZZ11yz8ay7urfVOMRmx3I6l4bS9karG\nCPsQAcMaWwUARqH8SseeHnjCegvOUFI6q+/dF6gfvaqaQDTcth1B+F+/xftvQxuq\nJKYB4trDAgMBAAECggEAQMMqRakAWqCv/IyEuTBLKBeFEfZQTZnmJ+iYY27z4chz\nUFGPfw7Jv+zIcE87vM/cEs8T++Nnnt1TM+rzCqRqDlqFBMEn2UPur++UD7HwTZcQ\n870mFntK5qH04088PpQxxeSOjOijVseWQU9NPTLyF/ofD4hLYvgRIvLq03TNLI/Z\nwNzus+17BW/lp3UUQRTcwFlRj7FvygNN/1Y90veGEeMaxe5jr3ranENNIf6RFqmt\nD3Nj/+6rpkaicMVQLwliRcZx0y/KbCEzGXuPX8NiI+xWhRv4IhLC6D0mQ0ymnlQ5\nopaBIvQoeEiM3iaCS6VfsbsQhitPcn0mutBS5Mwh8QKBgQDk4iBwsFOxuhbQE3+o\n0171UJ6sh2hiVFHHBlbcx6w3TEq2z/9Fh43K1P6BY0clUetCoiZL5fmd92sfFTsA\n6FqmwqpDpjIUEdOovFeGD13n/5tI1fOurkGawQ0RXoE7Aq8xJF6+yKw2ENbjJIXe\nd7WVmqAHSXKeh7oKV63/yJrDGQKBgQDhL/KdF+Nu6Lex2AazmyU/LiKej4SbRrq2\nnL4meam7x40jaKuePkwFUd4KNMNp4dcI109Q1hibKfAPXvJwaqCmHivl62xIpIJb\nCtz1ELu7P31jknMj5zRuXccXQufmiGRZzNfNcqN7uBxUq3JebobVmjiDlNg4DQoz\nUAWesXeEOwKBgBG3k01FyOS8A+INcFdQLUyN9gpi3OinoEDos7aZWjJZnHr0NM1c\nBdTKkfzQA4TXB3/77zz2y1C4Azm/ufaDBelcrjNYXQ4Cp0Cre5br/5fiyFFmBlvi\nLz/ca7eJejVoKsmCCDd6byIsQYYJoLcsywiOlI6b19x/ox4D1Xs0Ow6ZAoGAXEVv\nXlt5f+qvypnANTwvSPI4kUwxhAa5XzZe3BkiKaWc+ZNcLx1LvSpMl1YDdJFrsV24\nTGFN99Z5XXMEWHf4l9jpF+8dka6HE5Mh8vEGW7WqRXCu6VlFrKuUdr2dlGLy67D6\nBF8jCgDo6vDNjlAvw7rLyW7mIiGFunzhsKL7XB0CgYB8EvffHH4ltuIPPGIDzK0S\nP9Tc7zt+Y8QQt76kbUJpqZp/BdcA13vbhS57ewJ0MZm4cbo52v//8doibjo3WvfK\nlXgaeWSo++iK5GkaBnDoeu/Rz0Ffp5ExV0SL3UTudCGgEC4tZ/O3HPtpBgqKVmU/\n6Mwh2dpr1FrXq3XRAaZ8Qw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-krsbg@photoapplication-spring21.iam.gserviceaccount.com",
+  "client_id": "117557866254925751568",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-krsbg%40photoapplication-spring21.iam.gserviceaccount.com"
+}
