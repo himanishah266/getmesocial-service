@@ -39,8 +39,13 @@ public class UserDbResource {
     }
 
     @GetMapping    //getting all the data in the list
-    public List<UserDb> getAllUsers(){
-        return userService.getAllUsers();
+    public List<UserDb> getAllUsers(@RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+        if(firebaseUser!= null){
+            return userService.getAllUsers();
+        }
+
+        return null;
     }
 
 

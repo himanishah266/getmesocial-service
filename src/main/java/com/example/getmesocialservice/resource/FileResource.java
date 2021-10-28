@@ -2,7 +2,10 @@ package com.example.getmesocialservice.resource;
 
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.S3Object;
+import com.example.getmesocialservice.model.FirebaseUser;
 import com.example.getmesocialservice.service.FileService;
+import com.example.getmesocialservice.service.FirebaseService;
+import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -21,6 +24,11 @@ public class FileResource {
     @Autowired
     private FileService fileService;
 
+
+    @Autowired
+    private FirebaseService firebaseService;
+
+
     //Multipartfile: when you are doing upload using browser,
     // which contains: type, length, etc. of file.
     @PostMapping
@@ -29,19 +37,25 @@ public class FileResource {
     }
 
     @GetMapping("/view")
-    public void view(@RequestParam(name = "key") String key, HttpServletResponse response) throws IOException {
+    public void view(@RequestParam(name = "key") String key, HttpServletResponse response ) throws IOException {
        S3Object object = fileService.getFile(key);
        response.setContentType(object.getObjectMetadata().getContentType());
        response.getOutputStream().write(object.getObjectContent().readAllBytes());
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> download(@RequestParam(name = "key") String key) throws IOException {
+    public ResponseEntity<Resource> download(@RequestParam(name = "key") String key, @RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
         S3Object object= fileService.getFile(key);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(object.getObjectMetadata().getContentType()))
-                        .header(Headers.CONTENT_DISPOSITION, "attachment; filename = \""+key+ "\"")
-                .body(new ByteArrayResource(object.getObjectContent().readAllBytes())) ;
+
+        if(firebaseUser!= null){
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(object.getObjectMetadata().getContentType()))
+                    .header(Headers.CONTENT_DISPOSITION, "attachment; filename = \""+key+ "\"")
+                    .body(new ByteArrayResource(object.getObjectContent().readAllBytes())) ;
+        }
+        return null;
+
     }
 
     @DeleteMapping
