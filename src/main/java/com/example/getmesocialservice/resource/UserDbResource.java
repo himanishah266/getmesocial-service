@@ -1,5 +1,4 @@
 package com.example.getmesocialservice.resource;
-
 import com.example.getmesocialservice.exception.RestrictedInfoException;
 import com.example.getmesocialservice.model.FirebaseUser;
 import com.example.getmesocialservice.model.UserDb;
@@ -19,50 +18,53 @@ import java.util.List;
 public class UserDbResource {
 
     //using this annotation,
-    // it's gonna create object and transfer to the spring container
+    // It's gonna create object and transfer to the spring container
     @Autowired
     private UserDbService userService;
 
     @Autowired
     private FirebaseService firebaseService;
 
-    //send request body to save the data in json format., sending data
+    @GetMapping("/allUsers")   //getting all the data in the list
+    public List<UserDb> getAllUsers() throws IOException {
+            return userService.getAllUsers();
+    }
+
+    //get current user data
+    @GetMapping("/me")
+    @CrossOrigin
+    public UserDb getById(@RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+        if (firebaseUser != null) {
+            System.out.println(idToken);
+            System.out.println("in resource " + firebaseUser.getEmail());
+
+            return userService.getByID(idToken, firebaseUser.getEmail());
+        }
+        return null;
+    }
+
+    //Add new User0
     //@valid: it would try to validate all field of post depends on annotation of model classes
-    @PostMapping
+    @PostMapping("/addNewUser")
+    @CrossOrigin
     public UserDb saveUser(@RequestBody @Valid UserDb user, @RequestHeader(name="idToken") String idToken) throws IOException, FirebaseAuthException {
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
         //if id token is valid then you can save the user info.
-        if(firebaseUser!= null){
-            return userService.saveUser(user);
+        if(firebaseUser!= null) {
+             return userService.saveUser(user);
         }
         return  null;
     }
 
-    @GetMapping    //getting all the data in the list
-    public List<UserDb> getAllUsers(@RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
-        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
-        if(firebaseUser!= null){
-            return userService.getAllUsers();
-        }
 
-        return null;
-    }
-
-
-    @GetMapping("/find-by-address")
-    public List<UserDb> getByAddress(@RequestParam("address") String address) throws RestrictedInfoException{
-        if(address.equalsIgnoreCase("area51")) {
+    @GetMapping("/find-by-email")
+    public List<UserDb> getByAddress(@RequestParam("email") String email) throws RestrictedInfoException{
+        if(email.equalsIgnoreCase("root")) {
             throw new RestrictedInfoException();
         }
-       return userService.getByAddress(address);
+       return userService.getByEmailAddress(email);
     }
-
-
-    @GetMapping("/find-by-id")
-    public UserDb getById(@RequestParam(name = "id") String id){
-        return userService.getByID(id);
-    }
-
 
     @GetMapping("/findByName")
     public List<UserDb> getByName(@RequestParam(name = "name") String name){
@@ -74,11 +76,28 @@ public class UserDbResource {
         return userService.getByNameStartingwith(name);
     }
 
-    @PutMapping
-    public UserDb updateUser(@RequestBody UserDb userDb){
-        return userService.updateUser(userDb);
-
+    //update user data
+    @PutMapping("/updateUser")
+    public UserDb updateUser(@RequestBody UserDb userDb, @RequestHeader(name="idToken") String idToken) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+        if(firebaseUser!= null){
+            return userService.updateUser(userDb);
+        }
+        return null;
     }
+
+    //update profile photoURL
+    @PutMapping("me/profilePhoto")
+    @CrossOrigin
+    public UserDb updateProfilePhotoUrl(@RequestParam("profilePhotoUrl") String profilePhotoUrl, @RequestHeader("idToken") String idToken)
+            throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+        if(firebaseUser!= null) {
+            return userService.updateProfilePhotoUrl(profilePhotoUrl, firebaseUser.getEmail());
+        }
+        return null;
+    }
+
 
 
     @DeleteMapping

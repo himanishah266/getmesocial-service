@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface UserDbRepository extends MongoRepository<UserDb, String> {
 
-    List<UserDb> findAllByAddress(String address);
-
     List<UserDb> findAllByName(String name);
-
     List<UserDb> findAllByNameStartingWith(String startingLetter);
 
+    List<UserDb> findAllByEmailAddress(String email);
 }

@@ -29,6 +29,7 @@ public class AlbumDbResource {
         return albumService.saveAlbum(album);
     }
 
+    @CrossOrigin
     @GetMapping
     public List<AlbumDb> getAllAlbums(@RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);

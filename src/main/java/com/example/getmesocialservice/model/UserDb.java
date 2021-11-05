@@ -1,13 +1,10 @@
 package com.example.getmesocialservice.model;
 
 import com.example.getmesocialservice.Validation.ValidName;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 
 public class UserDb {
@@ -16,20 +13,14 @@ public class UserDb {
     private String id;
     @NotEmpty @ValidName
     private String name;
-    @Length(max = 10) @NotEmpty @ValidName
-    private String address;
-    @Min(value = 13) @Max(value = 150)
-    private int age;
-
+    @Email
+    private String emailAddress;
     private String profilePicUrl;
-    private Date dateAdded;
 
-
-
-    public UserDb(String name, String address, int age, String profilePicUrl) {
-        this.name = name ;
-        this.address = address;
-        this.age = age;
+    public UserDb(String id, String name, String emailAddress, String profilePicUrl) {
+        this.id = id;
+        this.name = name;
+        this.emailAddress = emailAddress;
         this.profilePicUrl = profilePicUrl;
     }
 
@@ -49,20 +40,12 @@ public class UserDb {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getProfilePicUrl() {
@@ -73,4 +56,14 @@ public class UserDb {
         this.profilePicUrl = profilePicUrl;
     }
 
+
+    @Override
+    public String toString() {
+        return "UserDb{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", profilePicUrl='" + profilePicUrl + '\'' +
+                '}';
+    }
 }
