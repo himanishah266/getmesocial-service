@@ -1,4 +1,6 @@
 package com.example.getmesocialservice.resource;
+
+import com.example.getmesocialservice.exception.InvalidIdToken;
 import com.example.getmesocialservice.exception.RestrictedInfoException;
 import com.example.getmesocialservice.model.FirebaseUser;
 import com.example.getmesocialservice.model.UserDb;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController   //this annotation applied to a class as request handler, it's used to create Restful web services using spring MVC.
 @RequestMapping("/api/users")     //rest endpoint path starts with
+@CrossOrigin
 //all the methods in the class starts with rest server
 public class UserDbResource {
 
@@ -48,13 +51,21 @@ public class UserDbResource {
     //@valid: it would try to validate all field of post depends on annotation of model classes
     @PostMapping("/addNewUser")
     @CrossOrigin
-    public UserDb saveUser(@RequestBody @Valid UserDb user, @RequestHeader(name="idToken") String idToken) throws IOException, FirebaseAuthException {
+    public UserDb saveUser(@RequestBody @Valid UserDb user, @RequestHeader(name="idToken") String idToken) throws IOException, FirebaseAuthException, InvalidIdToken {
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
         //if id token is valid then you can save the user info.
         if(firebaseUser!= null) {
              return userService.saveUser(user);
         }
+        if(idToken == null){
+            throw new InvalidIdToken();
+        }
         return  null;
+    }
+    // Invalid IdToken Custom Exception
+    @ExceptionHandler(InvalidIdToken.class)
+    public String invalidIdToken(InvalidIdToken ex){
+        return ex.getMessage();
     }
 
 

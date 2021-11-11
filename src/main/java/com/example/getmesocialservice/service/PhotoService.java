@@ -35,4 +35,8 @@ public class PhotoService {
     public void deletePhotos(String id) {
         photoRepository.deleteById(id);
     }
+
+    public List<Photo> getPhotosOfAlbum(String albumId) {
+        return photoRepository.findPhotosByAlbumId(albumId);
+    }
 }

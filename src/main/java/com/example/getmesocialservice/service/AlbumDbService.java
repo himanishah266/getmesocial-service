@@ -32,4 +32,15 @@ public class AlbumDbService {
     public void deleteAlbum(String id) {
         albumDbRepository.deleteById(id);
     }
+
+    public AlbumDb updateCoverPhoto(String coverPhotoUrl, String albumId) {
+        AlbumDb album;
+        if(albumDbRepository.findById(albumId).isPresent()){
+            album = albumDbRepository.findById(albumId).get();
+            album.setCoverPhotoUrl(coverPhotoUrl);
+            albumDbRepository.save(album);
+            return album;
+        }
+        return null;
+    }
 }
