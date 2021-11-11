@@ -83,8 +83,6 @@ public class AlbumDbResource {
     }
 
 
-
-
     @GetMapping("/find-by-id")
     public List<AlbumDb> getById(@RequestParam(name = "id") String id){
         return albumService.getById(id);

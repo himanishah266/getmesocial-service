@@ -24,10 +24,6 @@ public class PhotoService {
         return photoRepository.findAll();
     }
 
-    public List<Photo> getById(String id) {
-        return photoRepository.findAllById(id);
-    }
-
     public Photo updatePhoto(Photo photo) {
         return photoRepository.save(photo);
     }
@@ -38,5 +34,11 @@ public class PhotoService {
 
     public List<Photo> getPhotosOfAlbum(String albumId) {
         return photoRepository.findPhotosByAlbumId(albumId);
+    }
+
+    public List<Photo> getPhotoById(String id) {
+        return photoRepository.findAllById(id);
+
+
     }
 }

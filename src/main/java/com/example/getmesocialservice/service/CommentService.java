@@ -32,4 +32,12 @@ public class CommentService {
     public void deleteComment(String id) {
         commentRepository.deleteById(id);
     }
+
+    public List<Comment> getCommentsOfPhotos(String photoId) {
+        return commentRepository.findAllByPhotoId(photoId);
+
+
+
+
+    }
 }
