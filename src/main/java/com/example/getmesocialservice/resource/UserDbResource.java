@@ -100,11 +100,11 @@ public class UserDbResource {
     //update profile photoURL
     @PutMapping("me/profilePhoto")
     @CrossOrigin
-    public UserDb updateProfilePhotoUrl(@RequestParam("profilePhotoUrl") String profilePhotoUrl, @RequestHeader("idToken") String idToken)
+    public UserDb updateProfilePhotoUrl(@RequestParam("profilePicUrl") String profilePicUrl, @RequestHeader("idToken") String idToken)
             throws IOException, FirebaseAuthException {
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
         if(firebaseUser!= null) {
-            return userService.updateProfilePhotoUrl(profilePhotoUrl, firebaseUser.getEmail());
+            return userService.updateProfilePhotoUrl(profilePicUrl, firebaseUser.getEmail());
         }
         return null;
     }

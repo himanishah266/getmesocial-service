@@ -64,11 +64,11 @@ public class UserDbService {
 
     }
 
-    public UserDb updateProfilePhotoUrl(String profilePhotoUrl, String email) {
+    public UserDb updateProfilePhotoUrl(String profilePicUrl, String email) {
         List<UserDb> userDbList =  userRepository.findAll();
         for(UserDb user : userDbList){
             if(user.getEmailAddress().equalsIgnoreCase(email)){
-                user.setProfilePicUrl(profilePhotoUrl);
+                user.setProfilePicUrl(profilePicUrl);
                 userRepository.save(user);
                 return user;
             }
