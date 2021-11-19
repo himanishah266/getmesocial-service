@@ -2,10 +2,8 @@ package com.example.getmesocialservice.resource;
 
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.S3Object;
-import com.example.getmesocialservice.model.FirebaseUser;
+import com.example.getmesocialservice.model.File;
 import com.example.getmesocialservice.service.FileService;
-import com.example.getmesocialservice.service.FirebaseService;
-import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -16,23 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/files")
 public class FileResource {
 
     @Autowired
     private FileService fileService;
 
-
-    @Autowired
-    private FirebaseService firebaseService;
-
-
     //Multipartfile: when you are doing upload using browser,
     // which contains: type, length, etc. of file.
-    @PostMapping
-    public boolean upload(@RequestParam(name = "file")MultipartFile file){
+    @CrossOrigin
+    @PostMapping("/upload")
+    public File upload(@RequestParam(name = "file")MultipartFile file) throws IOException {
         return fileService.upload(file);
     }
 
@@ -43,26 +39,43 @@ public class FileResource {
        response.getOutputStream().write(object.getObjectContent().readAllBytes());
     }
 
-    @GetMapping("/download")
-    public ResponseEntity<Resource> download(@RequestParam(name = "key") String key, @RequestHeader(name ="idToken") String idToken) throws IOException, FirebaseAuthException {
-        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
-        S3Object object= fileService.getFile(key);
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> download(@PathVariable("fileId") String fileId) throws IOException {
+        S3Object object= fileService.getFileByFileId(fileId);
 
-        if(firebaseUser!= null){
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(object.getObjectMetadata().getContentType()))
-                    .header(Headers.CONTENT_DISPOSITION, "attachment; filename = \""+key+ "\"")
+                    .header(Headers.CONTENT_DISPOSITION, "attachment; filename = \""+fileId+ "\"")
                     .body(new ByteArrayResource(object.getObjectContent().readAllBytes())) ;
-        }
-        return null;
+    }
+
+    @GetMapping("/show/{fileId}")
+    @CrossOrigin
+    public void showFile(@PathVariable("fileId") String fileId, HttpServletResponse response) throws IOException {
+        S3Object object = fileService.getFileByFileId(fileId);
+        response.setContentType(object.getObjectMetadata().getContentType());
+        response.getOutputStream().write(object.getObjectContent().readAllBytes());
 
     }
 
+    @GetMapping("/allFiles")
+    @CrossOrigin()
+    public List<File> showAllFiles(HttpServletResponse response) throws IOException {
+        List<File>  files = fileService.getAllFiles( );
+        //response.setContentType(object.getObjectMetadata().getContentType());
+        //response.getOutputStream().write(object.getObjectContent().readAllBytes());
+return files;
+    }
+
+
+
+
+
+    //delete files
     @DeleteMapping
     public void delete(@RequestParam(name = "key") String key){
         fileService.deleteFile(key);
     }
-
 
 
 
