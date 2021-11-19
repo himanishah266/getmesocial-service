@@ -32,8 +32,13 @@ public class AlbumDbResource {
 
     @CrossOrigin
     @PostMapping
-    public AlbumDb saveAlbums(@RequestBody @Valid AlbumDb album){
-        return albumService.saveAlbum(album);
+    public AlbumDb saveAlbums(@RequestHeader(name ="idToken") String idToken, @RequestBody @Valid AlbumDb album) throws IOException, FirebaseAuthException {
+        FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
+
+        if(firebaseUser!= null){
+            return albumService.saveAlbum(album);
+        }
+        return null;
     }
 
 
