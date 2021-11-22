@@ -35,7 +35,7 @@ public class AlbumDbResource {
     public AlbumDb saveAlbums(@RequestHeader(name ="idToken") String idToken, @RequestBody @Valid AlbumDb album) throws IOException, FirebaseAuthException {
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
 
-        if(firebaseUser!= null){
+        if(firebaseUser!= null) {
             return albumService.saveAlbum(album);
         }
         return null;
@@ -83,7 +83,6 @@ public class AlbumDbResource {
 
         FirebaseUser firebaseUser = firebaseService.authenticate(idToken);
         return albumService.updateCoverPhoto(coverPhotoUrl, albumId);
-
 
     }
 

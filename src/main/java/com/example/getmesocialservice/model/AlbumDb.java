@@ -15,9 +15,9 @@ public class AlbumDb {
     private String name;
     private String coverPhotoUrl;
 
-    @NotEmpty @ValidCreatedBy
+    @NotEmpty
+    @ValidCreatedBy
     private String createdBy;
-
     private Date dateCreated;
 
     public AlbumDb(String name, String coverPhotoUrl, String createdBy, Date dateCreated) {

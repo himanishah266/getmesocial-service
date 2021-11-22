@@ -9,4 +9,6 @@ public interface AlbumDbRepository extends MongoRepository<AlbumDb, String> {
 
     List<AlbumDb> findAllById(String id);
 
+
+
 }
